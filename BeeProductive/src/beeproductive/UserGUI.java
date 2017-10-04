@@ -15,11 +15,14 @@ import javax.swing.*;
  */
 public class UserGUI
 {
-    private JFrame myFrame = new JFrame();
-    private JLabel helloLabel = new JLabel("Hello");
+    private JFrame myFrame = new JFrame("Bee Productive");
+    
+    private JLabel titleLabel = new JLabel(":: Bee Productive ::", JLabel.CENTER);
+    private JLabel setInterval = new JLabel("Set INTERVAL (minutes)");
+    private JLabel setBreak = new JLabel("Set BREAK (minutes)");
     private JButton startButton = new JButton("Start");
     private JButton resetButton = new JButton("Reset");
-
+    private JTextField counter = new JTextField("25:00");
     
     public UserGUI()
     {
@@ -31,12 +34,38 @@ public class UserGUI
         setMenuBar(myFrame);
         
         Container contentPane = myFrame.getContentPane();
-        contentPane.setLayout(new FlowLayout());       
+        contentPane.setLayout(new BorderLayout());
         
-        contentPane.add(helloLabel);
-        contentPane.add(startButton);
-        contentPane.add(resetButton);
+        // N O R T H
+        JPanel northPanel = new JPanel();
+        contentPane.add(northPanel, BorderLayout.NORTH);
+        northPanel.setLayout(new FlowLayout());
+        northPanel.add(titleLabel);
         
+        // C E N T E R
+        JPanel centerPanel = new JPanel();
+        contentPane.add(centerPanel, BorderLayout.CENTER);
+        centerPanel.setLayout(new GridLayout(4,1));
+        centerPanel.add(counter);
+        counter.setEditable(false);
+        centerPanel.add(startButton);
+        centerPanel.add(resetButton);
+        
+        // S O U T H
+        JPanel southPanel = new JPanel();
+        contentPane.add(southPanel, BorderLayout.SOUTH);
+        centerPanel.setLayout(new GridLayout(4,1));        
+        // add 2 sliders + 2 JTextFields + 2 JLabels
+        
+        // E A S T
+        JPanel eastPanel = new JPanel();
+        contentPane.add(eastPanel, BorderLayout.EAST);
+        contentPane.setLayout(new GridLayout(2,1));
+       
+        // W E S T
+        JPanel westPanel = new JPanel();
+        contentPane.add(westPanel, BorderLayout.WEST);
+        contentPane.setLayout(new GridLayout(2,1));        
         
         // add INDIVIDUALISED LISTENERS (event handlers):
         startButton.addActionListener(new startButtonHandler());
