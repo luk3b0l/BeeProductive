@@ -20,6 +20,16 @@ public class UserGUI
     private JLabel setInterval = new JLabel("Set INTERVAL (minutes)");
     private JLabel setBreak = new JLabel("Set BREAK (minutes)");
     private JLabel setRepetitions = new JLabel("Number of repetitions (INTERVAL + BREAK)");
+    private JLabel empty1 = new JLabel();
+    private JLabel empty2 = new JLabel();
+    private JLabel empty3 = new JLabel();
+    private JLabel empty4 = new JLabel();
+    private JLabel empty5 = new JLabel();
+    private JLabel empty6 = new JLabel();
+    private JLabel empty7 = new JLabel();
+    private JLabel empty8 = new JLabel();
+    private JLabel empty9 = new JLabel("                    ");
+    private JLabel empty10 = new JLabel("                    ");
     private JButton newSessionButton = new JButton("New Session");
     private JButton startButton = new JButton("Start");
     private JButton resetButton = new JButton("Reset");
@@ -38,11 +48,13 @@ public class UserGUI
     
     private void setFrame()
     {
-        myFrame.setSize(415, 480);
-        setMenuBar(myFrame);
-        
         Container contentPane = myFrame.getContentPane();
         contentPane.setLayout(new BorderLayout());
+        myFrame.setSize(200, 400);
+        setMenuBar(myFrame);
+        
+        
+        
         
         // N O R T H
         JPanel northPanel = new JPanel();
@@ -53,27 +65,45 @@ public class UserGUI
         // C E N T E R
         JPanel centerPanel = new JPanel();
         contentPane.add(centerPanel, BorderLayout.CENTER);
-        centerPanel.setLayout(new GridLayout(4,1));
+        centerPanel.setLayout(new GridLayout(5,1));
+        centerPanel.add(empty6);
         centerPanel.add(countdownTimer);
         countdownTimer.setEditable(false);
+        centerPanel.add(empty7);
         centerPanel.add(startButton);
-        centerPanel.add(resetButton);
+        centerPanel.add(empty8);
         
         // S O U T H
         JPanel southPanel = new JPanel();
         contentPane.add(southPanel, BorderLayout.SOUTH);
-        centerPanel.setLayout(new GridLayout(4,1));        
-        // add 2 sliders + 2 JTextFields + 2 JLabels
+        southPanel.setLayout(new GridLayout(3,3));    
+        southPanel.add(setInterval);
+        southPanel.add(intervalTimeInput);
+        southPanel.add(intervalSlider);
+        southPanel.add(setBreak);
+        southPanel.add(breakTimeInput);
+        southPanel.add(breakSlider);
+        southPanel.add(setRepetitions);
+        southPanel.add(repetitionsInput);
+        southPanel.add(empty1);
         
-        // E A S T
-//        JPanel eastPanel = new JPanel();
-//        contentPane.add(eastPanel, BorderLayout.EAST);
-//        contentPane.setLayout(new GridLayout(2,1));
-       
         // W E S T
-//        JPanel westPanel = new JPanel();
-//        contentPane.add(westPanel, BorderLayout.WEST);
-//        contentPane.setLayout(new GridLayout(2,1));        
+        JPanel westPanel = new JPanel();
+        contentPane.add(westPanel, BorderLayout.WEST);
+        westPanel.setLayout(new GridLayout(1,2));
+        westPanel.add(empty9);
+        westPanel.add(empty10);
+       
+        // E A S T
+        JPanel eastPanel = new JPanel();
+        contentPane.add(eastPanel, BorderLayout.EAST);
+        eastPanel.setLayout(new GridLayout(5,1));
+        eastPanel.add(empty2);
+        eastPanel.add(empty3);
+        eastPanel.add(resetButton);
+        eastPanel.add(empty4);
+        eastPanel.add(empty5);
+        
         
         // ***** Adding INDIVIDUALISED LISTENERS (event handlers):
         
@@ -82,8 +112,25 @@ public class UserGUI
         resetButton.addActionListener(new resetButtonHandler());
         newSessionButton.addActionListener(new newSessionHandler());
 
+        initialState();
         myFrame.pack();
         myFrame.setVisible(true);
+    }
+    
+    private void initialState()
+    {
+            setInterval.setVisible(false);
+            setBreak.setVisible(false);
+            setRepetitions.setVisible(false);
+            newSessionButton.setVisible(true);
+            startButton.setVisible(false);
+            resetButton.setVisible(false);
+            countdownTimer.setVisible(false);    
+            intervalTimeInput.setVisible(false);        
+            breakTimeInput.setVisible(false);        
+            repetitionsInput.setVisible(false);        
+            intervalSlider.setVisible(false);        
+            breakSlider.setVisible(false);  
     }
     
     private void setMenuBar(JFrame frame)
@@ -92,16 +139,50 @@ public class UserGUI
         frame.setJMenuBar(menubar);
         
         // *** FILE menu:
-        // create and add the File menu
         JMenu fileMenu = new JMenu("File");
         menubar.add(fileMenu);
+        
+        JMenuItem newSessionItem = new JMenu("New session");
+        fileMenu.add(newSessionItem);
+        newSessionItem.addActionListener(new newSessionHandler());
         
         JMenuItem exitItem = new JMenuItem("Exit");
         fileMenu.add(exitItem);
         exitItem.addActionListener(new ExitHandler());                           // TESTING!
         // -----------------------------------------------
         
-        // *** ABOUT menu:
+        // *** PROFILE menu:
+        JMenu profileMenu = new JMenu("Profile");
+        menubar.add(profileMenu);
+        
+        JMenuItem newItem = new JMenuItem("New");
+        profileMenu.add(newItem);
+        // TODO - add Action Listener
+
+        JMenuItem loadItem = new JMenuItem("Load");
+        profileMenu.add(loadItem);
+        // TODO - add Action Listener
+
+        JMenuItem editItem = new JMenuItem("Edit");
+        profileMenu.add(editItem);
+        // TODO - add Action Listener  
+ 
+        JMenuItem deleteItem = new JMenuItem("Delete");
+        profileMenu.add(deleteItem);
+        // TODO - add Action Listener
+        // -----------------------------------------------
+        
+        // *** HISTORY menu:
+        JMenu historyMenu = new JMenu("History");
+        menubar.add(historyMenu);
+        
+        JMenuItem showItem = new JMenuItem("Show");
+        historyMenu.add(showItem);
+        // TODO - add Action Listener
+        // -----------------------------------------------
+        
+        
+        // *** HELP menu:
         JMenu helpMenu = new JMenu("Help");
         menubar.add(helpMenu);
         
