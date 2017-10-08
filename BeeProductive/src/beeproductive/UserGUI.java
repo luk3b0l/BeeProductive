@@ -8,38 +8,34 @@ package beeproductive;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  *
- * @author xxx
+ * @author Lukasz Bol
+ * @version 1.1
  */
+
 public class UserGUI
 {
     private JFrame myFrame = new JFrame("Bee Productive");
+    private JPanel tempPanel;
 
-    private JLabel setInterval = new JLabel("Set INTERVAL (minutes)");
-    private JLabel setBreak = new JLabel("Set BREAK (minutes)");
-    private JLabel setRepetitions = new JLabel("Number of repetitions (INTERVAL + BREAK)");
-    private JLabel empty1 = new JLabel();
-    private JLabel empty2 = new JLabel();
-    private JLabel empty3 = new JLabel();
-    private JLabel empty4 = new JLabel();
-    private JLabel empty5 = new JLabel();
-    private JLabel empty6 = new JLabel();
-    private JLabel empty7 = new JLabel();
-    private JLabel empty8 = new JLabel();
-    private JLabel empty9 = new JLabel("                    ");
-    private JLabel empty10 = new JLabel("                    ");
+    private JLabel setInterval = new JLabel("Interval:");
+    private JLabel setBreak = new JLabel("Break:");
+    private JLabel setRepetitions = new JLabel("Repetitions: ");
     private JButton newSessionButton = new JButton("New Session");
     private JButton startButton = new JButton("Start");
     private JButton resetButton = new JButton("Reset");
-    private JTextField countdownTimer = new JTextField("--:--", JTextField.CENTER);
-    private JTextField intervalTimeInput = new JTextField(" ");
-    private JTextField breakTimeInput = new JTextField(" ");
-    private JTextField repetitionsInput = new JTextField(" ");
-    private JSlider intervalSlider = new JSlider();
-    private JSlider breakSlider = new JSlider();
-    
+    private JTextField countdownTimer = new JTextField("", JTextField.CENTER);
+    private JTextField intervalTimeInput = new JTextField("");
+    private JTextField breakTimeInput = new JTextField("");
+    private JTextField repetitionsInput = new JTextField("");
+    private JSlider intervalSlider = new JSlider(1, 90, 1);
+    private JSlider breakSlider = new JSlider(1, 30, 1);
+    private JSlider repetitionSlider = new JSlider(1, 10, 1);
     
     public UserGUI()
     {
@@ -50,59 +46,95 @@ public class UserGUI
     {
         Container contentPane = myFrame.getContentPane();
         contentPane.setLayout(new BorderLayout());
-        myFrame.setSize(200, 400);
+        Dimension preferredSize = new Dimension(350, 400);
+        myFrame.setPreferredSize(preferredSize);
         setMenuBar(myFrame);
-        
-        
-        
-        
-        // N O R T H
+       
+        // ***** N O R T H
         JPanel northPanel = new JPanel();
         contentPane.add(northPanel, BorderLayout.NORTH);
         northPanel.setLayout(new FlowLayout());
         northPanel.add(newSessionButton);
         
-        // C E N T E R
+        // ***** C E N T E R
         JPanel centerPanel = new JPanel();
         contentPane.add(centerPanel, BorderLayout.CENTER);
-        centerPanel.setLayout(new GridLayout(5,1));
-        centerPanel.add(empty6);
-        centerPanel.add(countdownTimer);
-        countdownTimer.setEditable(false);
-        centerPanel.add(empty7);
-        centerPanel.add(startButton);
-        centerPanel.add(empty8);
+        centerPanel.setLayout(new GridBagLayout());
+        GridBagConstraints gcCenter = new GridBagConstraints();
+        gcCenter.weightx = 0.5; gcCenter.weighty = 10;
         
-        // S O U T H
+        gcCenter.anchor = GridBagConstraints.SOUTH;
+        gcCenter.gridx = 0; gcCenter.gridy = 0;
+        centerPanel.add(countdownTimer, gcCenter);
+        countdownTimer.setEditable(false);
+        countdownTimer.setPreferredSize(new Dimension(160,100));
+        countdownTimer.setFont(new Font("Serif", Font.BOLD, 65));
+        
+        gcCenter.anchor = GridBagConstraints.CENTER;
+        gcCenter.gridx = 0; gcCenter.gridy = 1;
+        centerPanel.add(startButton, gcCenter);
+        
+        gcCenter.weighty = 7; 
+        gcCenter.gridx = 0; gcCenter.gridy = 2;
+        centerPanel.add(new JLabel(""), gcCenter);
+        
+        // ***** S O U T H
         JPanel southPanel = new JPanel();
         contentPane.add(southPanel, BorderLayout.SOUTH);
-        southPanel.setLayout(new GridLayout(3,3));    
-        southPanel.add(setInterval);
-        southPanel.add(intervalTimeInput);
-        southPanel.add(intervalSlider);
-        southPanel.add(setBreak);
-        southPanel.add(breakTimeInput);
-        southPanel.add(breakSlider);
-        southPanel.add(setRepetitions);
-        southPanel.add(repetitionsInput);
-        southPanel.add(empty1);
+        southPanel.setLayout(new GridBagLayout());
+        sendPanel(southPanel);
+        GridBagConstraints gcSouth = new GridBagConstraints();
+        gcSouth.weightx = 0.5; gcSouth.weighty = 0.5;        
         
-        // W E S T
-        JPanel westPanel = new JPanel();
-        contentPane.add(westPanel, BorderLayout.WEST);
-        westPanel.setLayout(new GridLayout(1,2));
-        westPanel.add(empty9);
-        westPanel.add(empty10);
-       
-        // E A S T
+        // COLUMN 1:
+        gcSouth.anchor = GridBagConstraints.LINE_START;
+        gcSouth.gridx = 0; gcSouth.gridy = 0;
+        southPanel.add(setInterval, gcSouth);
+        
+        gcSouth.gridx = 0; gcSouth.gridy = 1;
+        southPanel.add(setBreak, gcSouth);
+        
+        gcSouth.gridx = 0; gcSouth.gridy = 2;
+        southPanel.add(setRepetitions, gcSouth);
+        
+        // COLUMN 2:
+        gcSouth.anchor = GridBagConstraints.LINE_START;
+        gcSouth.gridx = 1; gcSouth.gridy = 0;
+        southPanel.add(intervalTimeInput, gcSouth);
+        intervalTimeInput.setPreferredSize(new Dimension(25,25));
+        intervalTimeInput.setFont(new Font("Serif", Font.PLAIN, 20));
+        intervalTimeInput.setEnabled(false);
+        
+        gcSouth.gridx = 1; gcSouth.gridy = 1;
+        southPanel.add(breakTimeInput, gcSouth);
+        breakTimeInput.setPreferredSize(new Dimension(25,25));
+        breakTimeInput.setFont(new Font("Serif", Font.PLAIN, 20));
+        breakTimeInput.setEnabled(false);
+
+        
+        gcSouth.gridx = 1; gcSouth.gridy = 2;
+        southPanel.add(repetitionsInput, gcSouth);
+        repetitionsInput.setPreferredSize(new Dimension(25,25));
+        repetitionsInput.setFont(new Font("Serif", Font.PLAIN, 20));
+        repetitionsInput.setEnabled(false);
+        
+        // COLUMN 3:
+        gcSouth.anchor = GridBagConstraints.LINE_START;
+        gcSouth.gridx = 2; gcSouth.gridy = 0;
+        southPanel.add(intervalSlider, gcSouth);
+        
+        gcSouth.gridx = 2; gcSouth.gridy = 1;
+        southPanel.add(breakSlider, gcSouth);
+        
+        gcSouth.gridx = 2; gcSouth.gridy = 2;
+        southPanel.add(repetitionSlider, gcSouth);
+
+
+        // ***** E A S T
         JPanel eastPanel = new JPanel();
         contentPane.add(eastPanel, BorderLayout.EAST);
-        eastPanel.setLayout(new GridLayout(5,1));
-        eastPanel.add(empty2);
-        eastPanel.add(empty3);
+        eastPanel.setLayout(new FlowLayout());
         eastPanel.add(resetButton);
-        eastPanel.add(empty4);
-        eastPanel.add(empty5);
         
         
         // ***** Adding INDIVIDUALISED LISTENERS (event handlers):
@@ -111,10 +143,15 @@ public class UserGUI
         startButton.addActionListener(new startButtonHandler());
         resetButton.addActionListener(new resetButtonHandler());
         newSessionButton.addActionListener(new newSessionHandler());
+        intervalSlider.addChangeListener(new intervalSliderHandler());
+        breakSlider.addChangeListener(new breakSliderHandler());
+        repetitionSlider.addChangeListener(new repetitionSliderHandler());
 
-        initialState();
+        initialState();     // setting initial state of the application
         myFrame.pack();
         myFrame.setVisible(true);
+        myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        myFrame.setLocationRelativeTo(null);    // setting the program in the centre of the screen
     }
     
     private void initialState()
@@ -131,6 +168,7 @@ public class UserGUI
             repetitionsInput.setVisible(false);        
             intervalSlider.setVisible(false);        
             breakSlider.setVisible(false);  
+            repetitionSlider.setVisible(false);
     }
     
     private void setMenuBar(JFrame frame)
@@ -142,7 +180,7 @@ public class UserGUI
         JMenu fileMenu = new JMenu("File");
         menubar.add(fileMenu);
         
-        JMenuItem newSessionItem = new JMenu("New session");
+        JMenuItem newSessionItem = new JMenuItem("New session");
         fileMenu.add(newSessionItem);
         newSessionItem.addActionListener(new newSessionHandler());
         
@@ -219,7 +257,10 @@ public class UserGUI
             breakTimeInput.setVisible(true);        
             repetitionsInput.setVisible(true);        
             intervalSlider.setVisible(true);        
-            breakSlider.setVisible(true);       
+            breakSlider.setVisible(true);      
+            repetitionSlider.setVisible(true);
+            JPanel tempPanel = getPanel();
+            tempPanel.setBorder(BorderFactory.createTitledBorder("Settings"));
         }
     }
     
@@ -329,16 +370,17 @@ public class UserGUI
     {
         public void actionPerformed(ActionEvent e)
         {
-            String intervalTime = intervalTimeInput.getText();
-            int intervalTimeNum = Integer.parseInt(intervalTime);        // converted for further countdown
-            int breakTime = Integer.parseInt(breakTimeInput.getText());
+            int intervalTime = intervalSlider.getValue();
+            int breakTime = breakSlider.getValue();
             String repetitions = repetitionsInput.getText();
-            int repetitionsNum = Integer.parseInt(repetitions);
+            int repetitionsNum = Integer.parseInt(repetitions);        
+
             System.out.println("Interval: " + intervalTime);
             System.out.println("Break: " + breakTime);
             System.out.println("Repetitions: " + repetitions);
-
-            countdownTimer.setText(intervalTime);
+            
+            countdownTimer.setText(intervalTime + ":00");
+            System.out.println("Completed successfully...");
         }
     }
 
@@ -351,6 +393,48 @@ public class UserGUI
             repetitionsInput.setText("0");
             countdownTimer.setText("--:--");
         }
+    }
+    // ---------------------------------------------------------------------------------------------------
+
+    // ***** SLIDERS HANDLERS:
+    private class intervalSliderHandler implements ChangeListener
+    {
+        @Override
+        public void stateChanged(ChangeEvent e) 
+        {
+            intervalTimeInput.setText("" + intervalSlider.getValue());
+        }
+    }
+    
+    private class breakSliderHandler implements ChangeListener
+    {
+        @Override
+        public void stateChanged(ChangeEvent e) 
+        {
+            breakTimeInput.setText("" + breakSlider.getValue());
+        }
+    }
+    
+    private class repetitionSliderHandler implements ChangeListener
+    {
+        @Override
+        public void stateChanged(ChangeEvent e) 
+        {
+            repetitionsInput.setText("" + repetitionSlider.getValue());
+        }
+    }
+    // ---------------------------------------------------------------------------------------------------
+ 
+    // ***** Additional methods:
+    
+    public void sendPanel(JPanel panel)
+    {
+        this.tempPanel = panel;
+    }
+    
+    public JPanel getPanel()
+    {
+        return this.tempPanel;
     }
     // ---------------------------------------------------------------------------------------------------
     
