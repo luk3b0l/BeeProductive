@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package beeproductive;
 
 /**
@@ -15,9 +10,11 @@ public class Session
     private int interval;
     private int breakTime;   
     private int repetitions;
+    private int sessionNumber = 0;
     
     public Session(int newInterval, int newBreakTime, int newRepetition)
     {
+        this.sessionNumber += 1;
         this.interval = newInterval;
         this.breakTime = newBreakTime;
         this.repetitions = newRepetition;

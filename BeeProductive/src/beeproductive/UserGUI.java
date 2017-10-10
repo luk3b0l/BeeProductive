@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package beeproductive;
 
 import java.awt.*;
@@ -20,6 +15,7 @@ import javax.swing.event.ChangeListener;
 
 public class UserGUI
 {
+    private UserProfile user;
     private JFrame myFrame = new JFrame("Bee Productive");
     private JPanel tempPanel;
 
@@ -245,7 +241,10 @@ public class UserGUI
         @Override
         public void actionPerformed(ActionEvent e) 
         {
-            Session newSession = new Session();
+            String name = JOptionPane.showInputDialog("Give your name: ");
+            System.out.println("NAME: " + name);
+            setUserProfile(name);
+            
             setInterval.setVisible(true);
             setBreak.setVisible(true);
             setRepetitions.setVisible(true);
@@ -381,6 +380,9 @@ public class UserGUI
             
             countdownTimer.setText(intervalTime + ":00");
             System.out.println("Completed successfully...");
+            
+            
+            //setNewSession(interval, breakTime, repetitions);                    
         }
     }
 
@@ -436,8 +438,18 @@ public class UserGUI
     {
         return this.tempPanel;
     }
-    // ---------------------------------------------------------------------------------------------------
     
+    public void setUserProfile(String name)
+    {
+        this.user = new UserProfile(name);
+    }
+    
+    public UserProfile getUserProfile()
+    {
+        return this.user;
+    }
+    // ---------------------------------------------------------------------------------------------------
+
     public static void main(String [] args)
     {
         new UserGUI();

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package beeproductive;
 
 import java.util.ArrayList;
@@ -15,16 +10,22 @@ import java.util.ArrayList;
 public class UserProfile 
 {
     private String name;
-    private ArrayList<Session> session;
+    private ArrayList<Session> sessions;
     
     public UserProfile(String newName)
     {
         this.name = newName;
-        session = new ArrayList<>();
+        sessions = new ArrayList<>();
     }
 
     public String getName() 
     {
         return name;
+    }
+    
+    public void addSession(int interval, int breakTime, int repetitions)
+    {
+        Session temp = new Session(interval, breakTime, repetitions);
+        sessions.add(temp);
     }
 }
