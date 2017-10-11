@@ -49,4 +49,13 @@ public class Session
     {
         this.repetitions = repetitions;
     }
+    
+    public String toString()
+    {
+        String s = "No: " + sessionNumber + 
+                   "Interval: " + interval + 
+                   "Break: " + breakTime +
+                   "Repetitions: " + repetitions;
+        return s;
+    }           
 }

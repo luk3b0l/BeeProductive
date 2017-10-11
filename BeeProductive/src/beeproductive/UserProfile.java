@@ -28,4 +28,21 @@ public class UserProfile
         Session temp = new Session(interval, breakTime, repetitions);
         sessions.add(temp);
     }
+    
+    private String getAllSessions()
+    {
+        String s = "";
+        for (Session temp :  sessions)
+        {
+            s = s + temp.toString() + "\n";
+        }
+        return s;
+    }
+    
+    public String toString()
+    {
+        String s = "NAME: " + name + 
+                "ALL SESSIONS: " + getAllSessions();
+        return s;
+    }
 }

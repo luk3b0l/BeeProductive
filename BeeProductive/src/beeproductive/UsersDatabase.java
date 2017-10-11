@@ -34,8 +34,30 @@ public class UsersDatabase
         users.add(newUser);
     }         
     
+    public UserProfile findUser(String name)
+    {
+        for (UserProfile temp : users)
+        {
+            if(temp.getName().equals(name))
+            {
+                return temp;
+            }
+        }
+        return null;
+    }
+    
     public void removeUser(UserProfile existingUser)
     {
         users.remove(existingUser);
+    }
+    
+    public String toString()
+    {
+        String s = "";
+        for (UserProfile temp : users)
+        {
+            s = s + temp.toString() + "\n";
+        }
+        return s;
     }
 }
