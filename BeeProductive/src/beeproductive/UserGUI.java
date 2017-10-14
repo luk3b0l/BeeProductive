@@ -2,10 +2,16 @@ package beeproductive;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.text.NumberFormat;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.Timer;
 
 /**
  *
@@ -14,7 +20,9 @@ import javax.swing.event.ChangeListener;
  */
 
 public class UserGUI
-{
+{   
+    private Timer timer;
+    
     private UserProfile user;
     private JFrame myFrame = new JFrame("Bee Productive");
     private JPanel tempPanel;
@@ -39,7 +47,7 @@ public class UserGUI
     }
     
     private void setFrame()
-    {
+    {        
         Container contentPane = myFrame.getContentPane();
         contentPane.setLayout(new BorderLayout());
         Dimension preferredSize = new Dimension(350, 400);
@@ -372,19 +380,83 @@ public class UserGUI
             int intervalTime = intervalSlider.getValue();
             int breakTime = breakSlider.getValue();
             String repetitions = repetitionsInput.getText();
-            int repetitionsNum = Integer.parseInt(repetitions);        
+            int repetitionsNum = Integer.parseInt(repetitions);     
 
-            System.out.println("Interval: " + intervalTime);
-            System.out.println("Break: " + breakTime);
-            System.out.println("Repetitions: " + repetitions);
+//            int intervalToSeconds = intervalTime * 60;
+//            int calculateMinutes;
+//            int calculateSeconds;
+//            String finalMinutes;
+//            String finalSeconds;
+//
+//            while(intervalToSeconds >= 0)
+//            {
+//                calculateMinutes = intervalToSeconds / 60;
+//                calculateSeconds = intervalToSeconds % 60;
+//                finalMinutes = Integer.toString(calculateMinutes);
+//                finalSeconds = Integer.toString(calculateSeconds);
+//                
+//
+//                countdownTimer.setText(finalMinutes + ":" + finalSeconds);
+//                System.out.println(finalMinutes + ":" + finalSeconds); 
+//                intervalToSeconds -= 1;
+//                try 
+//                {
+//                    TimeUnit.SECONDS.sleep(1);
+//                } 
+//                catch (InterruptedException ex) 
+//                {
+//                    System.out.println(ex);
+//                }
+//            }
             
-            countdownTimer.setText(intervalTime + ":00");
-            System.out.println("Completed successfully...");
-            
-            
-            //setNewSession(interval, breakTime, repetitions);                    
+            TimeClass tc = new TimeClass(intervalTime);
+            timer = new Timer(1000, tc);
+            timer.start();    
         }
     }
+    public class TimeClass implements ActionListener
+    {
+        int counter;
+        long millis;
+
+        public TimeClass(int counter)
+        {
+            this.counter = (counter * 60) + 1;
+
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) 
+        {
+            this.counter -= 1;
+            int intervalToSeconds = this.counter;
+            int calculateMinutes = intervalToSeconds / 60;
+            int calculateSeconds = intervalToSeconds % 60;
+            String finalMinutes = Integer.toString(calculateMinutes);
+            String finalSeconds = Integer.toString(calculateSeconds);
+
+            if(calculateSeconds < 10)
+            {
+                finalSeconds = "0" + finalSeconds;
+            }            
+            
+            if(intervalToSeconds >= 0)
+            {              
+
+                countdownTimer.setText(finalMinutes + ":" + finalSeconds);                
+            }
+            else
+            {
+                timer.stop();
+                countdownTimer.setText("DONE");
+                Toolkit.getDefaultToolkit().beep();
+
+                System.out.println("DONE!!!!!!!!!");
+            }
+        }
+    }
+    
+    
 
     private class resetButtonHandler implements ActionListener
     {
