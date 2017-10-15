@@ -21,7 +21,10 @@ import javax.swing.Timer;
 
 public class UserGUI
 {   
+    private boolean newIntervalTimer = false;
+    private boolean newBreakTimer = false;
     private Timer timer;
+    private Timer breakTimer;
     
     private UserProfile user;
     private JFrame myFrame = new JFrame("Bee Productive");
@@ -381,55 +384,41 @@ public class UserGUI
             int breakTime = breakSlider.getValue();
             String repetitions = repetitionsInput.getText();
             int repetitionsNum = Integer.parseInt(repetitions);     
+            System.out.println("TEST 1");
 
-//            int intervalToSeconds = intervalTime * 60;
-//            int calculateMinutes;
-//            int calculateSeconds;
-//            String finalMinutes;
-//            String finalSeconds;
-//
-//            while(intervalToSeconds >= 0)
-//            {
-//                calculateMinutes = intervalToSeconds / 60;
-//                calculateSeconds = intervalToSeconds % 60;
-//                finalMinutes = Integer.toString(calculateMinutes);
-//                finalSeconds = Integer.toString(calculateSeconds);
-//                
-//
-//                countdownTimer.setText(finalMinutes + ":" + finalSeconds);
-//                System.out.println(finalMinutes + ":" + finalSeconds); 
-//                intervalToSeconds -= 1;
-//                try 
-//                {
-//                    TimeUnit.SECONDS.sleep(1);
-//                } 
-//                catch (InterruptedException ex) 
-//                {
-//                    System.out.println(ex);
-//                }
-//            }
             
-            TimeClass tc = new TimeClass(intervalTime);
-            timer = new Timer(1000, tc);
-            timer.start();    
-        }
+            // =================================================================
+
+
+                
+
+                    TimeClass intervalTimeCounter = new TimeClass(intervalTime);
+                    timer = new Timer(500, intervalTimeCounter);
+                    timer.start();  
+
+
+
+
+
+         }
     }
+    
     public class TimeClass implements ActionListener
     {
-        int counter;
+        int newInterval;
         long millis;
 
-        public TimeClass(int counter)
+        public TimeClass(int intervalTime)
         {
-            this.counter = (counter * 60) + 1;
-
+            this.newInterval = (intervalTime * 60) + 1;
+            System.out.println("TimeClass constructor");
         }
 
         @Override
         public void actionPerformed(ActionEvent e) 
         {
-            this.counter -= 1;
-            int intervalToSeconds = this.counter;
+            this.newInterval -= 1;
+            int intervalToSeconds = this.newInterval;
             int calculateMinutes = intervalToSeconds / 60;
             int calculateSeconds = intervalToSeconds % 60;
             String finalMinutes = Integer.toString(calculateMinutes);
@@ -439,25 +428,68 @@ public class UserGUI
             {
                 finalSeconds = "0" + finalSeconds;
             }            
-            
             if(intervalToSeconds >= 0)
-            {              
-
-                countdownTimer.setText(finalMinutes + ":" + finalSeconds);                
+            {   
+                System.out.println("Check: interval");
+                countdownTimer.setText(finalMinutes + ":" + finalSeconds);           
             }
             else
-            {
+            {            
                 timer.stop();
-                countdownTimer.setText("DONE");
                 Toolkit.getDefaultToolkit().beep();
 
-                System.out.println("DONE!!!!!!!!!");
+
+                
+                int breakTime = breakSlider.getValue();
+                BreakTimeClass breakTimeCounter = new BreakTimeClass(breakTime);
+                breakTimer = new Timer(500, breakTimeCounter);
+                breakTimer.start();
             }
         }
     }
     
+    public class BreakTimeClass implements ActionListener
+    {
+        int newBreak;
+        long millis;
+
+        public BreakTimeClass(int breakTime)
+        {
+            this.newBreak = (breakTime * 60) + 1;
+            System.out.println("BreakTimeClass constructor");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) 
+        {
+            this.newBreak -= 1;
+            int breakToSeconds = this.newBreak;
+            int calculateMinutes = breakToSeconds / 60;
+            int calculateSeconds = breakToSeconds % 60;
+            String finalMinutes = Integer.toString(calculateMinutes);
+            String finalSeconds = Integer.toString(calculateSeconds);
+
+            if(calculateSeconds < 10)
+            {
+                finalSeconds = "0" + finalSeconds;
+            }
+
+            if(breakToSeconds >= 0)
+            {
+                System.out.println("Check: break");
+                countdownTimer.setText(finalMinutes + ":" + finalSeconds);        
+            }
+            else
+            {
+                breakTimer.stop();
+                Toolkit.getDefaultToolkit().beep();
+
+            }                  
+        }
+    }
     
 
+    
     private class resetButtonHandler implements ActionListener
     {
         public void actionPerformed(ActionEvent e)
@@ -519,7 +551,7 @@ public class UserGUI
     public UserProfile getUserProfile()
     {
         return this.user;
-    }
+    }    
     // ---------------------------------------------------------------------------------------------------
 
     public static void main(String [] args)
