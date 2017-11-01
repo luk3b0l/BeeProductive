@@ -1,4 +1,4 @@
-package beeproductive;
+package beeproductive.mainClasses;
 
 import java.util.ArrayList;
 

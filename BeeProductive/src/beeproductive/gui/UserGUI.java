@@ -1,5 +1,6 @@
-package beeproductive;
+package beeproductive.gui;
 
+import beeproductive.mainClasses.UserProfile;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.NumberFormat;
