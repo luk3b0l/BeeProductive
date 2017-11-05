@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package testrunner;
 
 import beeproductive.mainClasses.CountdownTimer;
@@ -12,7 +7,7 @@ import org.junit.runner.notification.Failure;
 
 /**
  *
- * @author xxx
+ * @author Lukasz Bol
  */
 public class TestRunner 
 {
@@ -26,5 +21,4 @@ public class TestRunner
         }
         System.out.println(result.wasSuccessful());
     }
-    
 }
