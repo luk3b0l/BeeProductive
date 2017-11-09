@@ -2,8 +2,10 @@ package beeproductive.mainClasses;
 
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  *
@@ -11,6 +13,8 @@ import org.junit.BeforeClass;
  */
 public class SessionTest 
 {
+    private Session testSession = null;
+    
     @BeforeClass
     public static void setUpClass(){}
     
@@ -22,4 +26,12 @@ public class SessionTest
     
     @After
     public void tearDown(){}     
+    
+    @Test
+    public void testSetupSession()
+    {
+        testSession = new Session(25, 5, 3);
+        Assert.assertNotNull(testSession);
+    }
+    
 }
