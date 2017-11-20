@@ -3,7 +3,7 @@
 ## Contents
 
 1. Project Description
-2. System look
+2. System Look
 3. The Repository
 4. Future Development
 5. Help
