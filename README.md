@@ -16,7 +16,7 @@ NOTE: The project is under construction.
 
 
 ## 2. System look  
-The below are screenshots from the initial version of the program:
+The below are screenshots from the initial version of the program.
 
 ## 2.1 Application start
 ![App start](systemPictures/1-appStart.jpg)
@@ -41,11 +41,19 @@ The below are screenshots from the initial version of the program:
 
 
 ## 3. The Repository  
+The repository consists of:
+- BeeProductive - including program and test files
+- systemPictures - including pictures of a running program
+- USE CASE DIAGRAM - BeeProductive v1.1 - a Use Case Diagram showing core functionality of the program
 
 
-## 3. Future Development 
+## 4. Future Development 
+Future development of this application may include:
+- a user profile
+- remote database to store users' data
+- history of past usage of the program (e.g. quantity of run intervals, dates, intervals time, breaks time, repetitions)
 
-
-## 3. Help  
-
+## 5. Help  
+Please do not hesitate to contact me on the below e-mail if you encounter any problems or need further information.
+Contact: <b>lukaszbol[at]yahoo[dot]co[dot]uk</b>
 
