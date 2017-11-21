@@ -15,7 +15,7 @@ This project is all about stop procrastinating and improving a user's focus on t
 NOTE: The project is under construction.
 
 
-## 2. System look  
+## 2. System Look  
 The below are screenshots from the initial version of the program.
 
 ## 2.1 Application start
