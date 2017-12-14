@@ -150,7 +150,7 @@ public class UserGUI
         // Menu:
         startButton.addActionListener(new startButtonHandler());
         resetButton.addActionListener(new resetButtonHandler());
-        newSessionButton.addActionListener(new newSessionHandler());
+        newSessionButton.addActionListener(new newSessionButtonHandler());
         intervalSlider.addChangeListener(new intervalSliderHandler());
         breakSlider.addChangeListener(new breakSliderHandler());
         repetitionSlider.addChangeListener(new repetitionSliderHandler());
@@ -190,7 +190,7 @@ public class UserGUI
         
         JMenuItem newSessionItem = new JMenuItem("New session");
         fileMenu.add(newSessionItem);
-        newSessionItem.addActionListener(new newSessionHandler());
+        newSessionItem.addActionListener(new newSessionButtonHandler());
         
         JMenuItem exitItem = new JMenuItem("Exit");
         fileMenu.add(exitItem);
@@ -248,30 +248,40 @@ public class UserGUI
     // - New session
     // - Exit
     
-    private class newSessionHandler implements ActionListener
+    private class newSessionButtonHandler implements ActionListener
     {
         @Override
         public void actionPerformed(ActionEvent e) 
         {
             String name = JOptionPane.showInputDialog("Give your name: ");
-            System.out.println("NAME: " + name);
-            setUserProfile(name);
+            if(name != null & name.length() >= 3)
+            {
+                System.out.println("NAME: " + name);
+                setUserProfile(name);
+                 
+                setInterval.setVisible(true);
+                setBreak.setVisible(true);
+                setRepetitions.setVisible(true);
+                newSessionButton.setVisible(false);
+                startButton.setVisible(true);
+                resetButton.setVisible(true);
+                countdownTimer.setVisible(true);    
+                intervalTimeInput.setVisible(true);        
+                breakTimeInput.setVisible(true);        
+                repetitionsInput.setVisible(true);        
+                intervalSlider.setVisible(true);        
+                breakSlider.setVisible(true);      
+                repetitionSlider.setVisible(true);
+                JPanel tempPanel = getPanel();
+                tempPanel.setBorder(BorderFactory.createTitledBorder("Settings"));
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(myFrame, "No name added or name less than 3.", "ERROR Info", JOptionPane.ERROR_MESSAGE);
+            }
             
-            setInterval.setVisible(true);
-            setBreak.setVisible(true);
-            setRepetitions.setVisible(true);
-            newSessionButton.setVisible(false);
-            startButton.setVisible(true);
-            resetButton.setVisible(true);
-            countdownTimer.setVisible(true);    
-            intervalTimeInput.setVisible(true);        
-            breakTimeInput.setVisible(true);        
-            repetitionsInput.setVisible(true);        
-            intervalSlider.setVisible(true);        
-            breakSlider.setVisible(true);      
-            repetitionSlider.setVisible(true);
-            JPanel tempPanel = getPanel();
-            tempPanel.setBorder(BorderFactory.createTitledBorder("Settings"));
+            
+ 
         }
     }
     
