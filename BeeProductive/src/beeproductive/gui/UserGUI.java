@@ -15,7 +15,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.Timer;
 
 /**
- *
+ * This class provides main program GUI, with core options.
  * @author Lukasz Bol
  * @version 1.1
  */
@@ -26,11 +26,9 @@ public class UserGUI
     private boolean timerNewBreak = false;
     private Timer timer;
     private Timer breakTimer;
-    
     private UserProfile user;
     private JFrame mainGUIFrame = new JFrame("Bee Productive");
     private JPanel tempPanel;
-
     private JLabel labelSetInterval = new JLabel("Interval:");
     private JLabel labelSetBreak = new JLabel("Break:");
     private JLabel labelSetRepetitiions = new JLabel("Repetitions: ");
@@ -119,7 +117,6 @@ public class UserGUI
         inputBreakTime.setFont(new Font("Serif", Font.PLAIN, 20));
         inputBreakTime.setEnabled(false);
 
-        
         gcSouth.gridx = 1; gcSouth.gridy = 2;
         southPanel.add(inputRepetitions, gcSouth);
         inputRepetitions.setPreferredSize(new Dimension(25,25));
@@ -137,7 +134,6 @@ public class UserGUI
         gcSouth.gridx = 2; gcSouth.gridy = 2;
         southPanel.add(sliderRepetitions, gcSouth);
 
-
         // ***** E A S T
         JPanel eastPanel = new JPanel();
         contentPane.add(eastPanel, BorderLayout.EAST);
@@ -146,8 +142,6 @@ public class UserGUI
         
         
         // ***** Adding INDIVIDUALISED LISTENERS (event handlers):
-        
-        // Menu:
         buttonStart.addActionListener(new buttonStartHandler());
         buttonReset.addActionListener(new buttonResetHandler());
         buttonNewSession.addActionListener(new NewSessionButtonHandler());
@@ -155,11 +149,11 @@ public class UserGUI
         sliderBreak.addChangeListener(new sliderBreakHandler());
         sliderRepetitions.addChangeListener(new sliderRepetitionsHandler());
 
-        initialState();     // setting initial state of the application
+        initialState();     // setting initial state of the application view
         mainGUIFrame.pack();
         mainGUIFrame.setVisible(true);
         mainGUIFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainGUIFrame.setLocationRelativeTo(null);    // setting the program in the centre of the screen
+        mainGUIFrame.setLocationRelativeTo(null);
     }
     
     private void initialState()
@@ -227,7 +221,6 @@ public class UserGUI
         // TODO - add Action Listener
         // -----------------------------------------------
         
-        
         // *** HELP menu:
         JMenu helpMenu = new JMenu("Help");
         menubar.add(helpMenu);
@@ -247,6 +240,8 @@ public class UserGUI
     // File:
     // - New session
     // - Exit
+    
+// ***** L I S T E N E R S -------------------------------------------------------------------------------------
     
     private class NewSessionButtonHandler implements ActionListener
     {
@@ -286,8 +281,8 @@ public class UserGUI
     {
         public void actionPerformed(ActionEvent e)
         {
-            int answer = JOptionPane.showConfirmDialog(mainGUIFrame, "Are you sure you want to exit?", "Exit Confirmation", JOptionPane.YES_NO_OPTION); 
-            if(answer == JOptionPane.YES_OPTION)
+            int userAnswer = JOptionPane.showConfirmDialog(mainGUIFrame, "Are you sure you want to exit?", "Exit Confirmation", JOptionPane.YES_NO_OPTION); 
+            if(userAnswer == JOptionPane.YES_OPTION)
             {
                 System.exit(0);
             }
@@ -381,7 +376,6 @@ public class UserGUI
             JOptionPane.showMessageDialog(mainGUIFrame, message, title, JOptionPane.INFORMATION_MESSAGE);
         }
     }
-    // ---------------------------------------------------------------------------------------------------
     
     // ***** BUTTON HANDLERS:
     private class buttonStartHandler implements ActionListener
@@ -391,23 +385,11 @@ public class UserGUI
             int intervalTime = sliderInterval.getValue();
             int breakTime = sliderBreak.getValue();
             String repetitions = inputRepetitions.getText();
-            int repetitionsNum = Integer.parseInt(repetitions);     
-            System.out.println("TEST 1");
+            int repetitionsNum = Integer.parseInt(repetitions);              
 
-            
-            // =================================================================
-
-
-                
-
-                    TimeClass intervalTimeCounter = new TimeClass(intervalTime);
-                    timer = new Timer(500, intervalTimeCounter);
-                    timer.start();  
-
-
-
-
-
+            TimeClass intervalTimeCounter = new TimeClass(intervalTime);
+            timer = new Timer(500, intervalTimeCounter);
+            timer.start();  
          }
     }
     
@@ -446,8 +428,6 @@ public class UserGUI
                 timer.stop();
                 Toolkit.getDefaultToolkit().beep();
 
-
-                
                 int breakTime = sliderBreak.getValue();
                 BreakTimeClass breakTimeCounter = new BreakTimeClass(breakTime);
                 breakTimer = new Timer(500, breakTimeCounter);
@@ -496,8 +476,6 @@ public class UserGUI
         }
     }
     
-
-    
     private class buttonResetHandler implements ActionListener
     {
         public void actionPerformed(ActionEvent e)
@@ -508,7 +486,6 @@ public class UserGUI
             outputCountdownTimer.setText("--:--");
         }
     }
-    // ---------------------------------------------------------------------------------------------------
 
     // ***** SLIDERS HANDLERS:
     private class sliderIntervalHandler implements ChangeListener
@@ -537,7 +514,8 @@ public class UserGUI
             inputRepetitions.setText("" + sliderRepetitions.getValue());
         }
     }
-    // ---------------------------------------------------------------------------------------------------
+    
+    // ***** M E T H O D S -------------------------------------------------------------------------------------
     public void sendPanel(JPanel panel)
     {
         this.tempPanel = panel;
