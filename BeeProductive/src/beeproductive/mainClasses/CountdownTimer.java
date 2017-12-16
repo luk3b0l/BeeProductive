@@ -1,20 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package beeproductive.mainClasses;
 
 import java.text.NumberFormat;
 import javax.swing.Timer;
 /**
- *
+ * This class supplies with a main counter and its options such as START, STOP, etc.
  * @author Lukasz Bol
  */
 public class CountdownTimer 
 {
-    private int intervalTime;
-    private int breakTime;
+    private int timeInterval;
+    private int timeBreak;
     private Timer timer;
     private long lastTimeUpdate;    // when count was last updated
     
@@ -24,9 +19,9 @@ public class CountdownTimer
     
     public CountdownTimer(int newInterval, int newBreak)
     {
-        this.intervalTime = newInterval;
-        this.breakTime = newBreak;
-        startCountdown(intervalTime, breakTime);        
+        this.timeInterval = newInterval;
+        this.timeBreak = newBreak;
+        startCountdown(timeInterval, timeBreak);        
     }    
     
     public void startCountdown(int newIntervalTime, int newBreakTime)
@@ -72,8 +67,8 @@ public class CountdownTimer
     public void updateDisplay()
     {
         long timeNow = System.currentTimeMillis();
-        long elapsed = timeNow - lastTimeUpdate;
-        remainder = remainder - elapsed;
+        long elapsedTime = timeNow - lastTimeUpdate;
+        remainder = remainder - elapsedTime;
         lastTimeUpdate = timeNow;
         
         //Converting remaining miliseconds to mm:ss format and display it
