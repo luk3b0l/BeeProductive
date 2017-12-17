@@ -8,7 +8,7 @@ package beeproductive.mainClasses;
 public class Session 
 {
     private int countInterval;
-    private int breakTime;   
+    private int countBreakTime;   
     private int countRepetitions;
     private int countSessionNumber = 0;
     
@@ -16,7 +16,7 @@ public class Session
     {
         this.countSessionNumber += 1;
         this.countInterval = newInterval;
-        this.breakTime = newBreakTime;
+        this.countBreakTime = newBreakTime;
         this.countRepetitions = newRepetition;
     }
 
@@ -27,7 +27,7 @@ public class Session
 
     public int getBreakTime() 
     {
-        return breakTime;
+        return countBreakTime;
     }
 
     public int getRepetitions() 
@@ -42,7 +42,7 @@ public class Session
 
     public void setBreakTime(int newBreakTime) 
     {
-        this.breakTime = newBreakTime;
+        this.countBreakTime = newBreakTime;
     }
 
     public void setRepetitions(int countRepetitions) 
@@ -52,10 +52,10 @@ public class Session
     
     public String toString()
     {
-        String s = "No: " + countSessionNumber + 
-                   "Interval: " + countInterval + 
-                   "Break: " + breakTime +
-                   "Repetitions: " + countRepetitions;
-        return s;
+        String sessionInfo = "No: " + this.countSessionNumber + 
+                   "Interval: " + this.countInterval + 
+                   "Break: " + this.countBreakTime +
+                   "Repetitions: " + this.countRepetitions;
+        return sessionInfo;
     }           
 }
