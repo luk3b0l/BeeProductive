@@ -3,19 +3,19 @@ package beeproductive.mainClasses;
 import java.util.ArrayList;
 
 /**
- *
+ * This class is for creating a user profile, together with their listOfSessions' data.
  * @author Lukasz Bol
  * @version 1.1
  */
 public class UserProfile 
 {
     private String name;
-    private ArrayList<Session> sessions;
+    private ArrayList<Session> listOfSessions;
     
     public UserProfile(String newName)
     {
         this.name = newName;
-        sessions = new ArrayList<>();
+        listOfSessions = new ArrayList<>();
     }
 
     public String getName() 
@@ -23,26 +23,26 @@ public class UserProfile
         return name;
     }
     
-    public void addSession(int interval, int breakTime, int repetitions)
+    public void addSession(int newIinterval, int newBreakTime, int newRepetitions)
     {
-        Session temp = new Session(interval, breakTime, repetitions);
-        sessions.add(temp);
+        Session temp = new Session(newIinterval, newBreakTime, newRepetitions);
+        listOfSessions.add(temp);
     }
     
     private String getAllSessions()
     {
-        String s = "";
-        for (Session temp :  sessions)
+        String allUserSessionsInfo = "";
+        for (Session tempSession :  listOfSessions)
         {
-            s = s + temp.toString() + "\n";
+            allUserSessionsInfo = allUserSessionsInfo + tempSession.toString() + "\n";
         }
-        return s;
+        return allUserSessionsInfo;
     }
     
     public String toString()
     {
-        String s = "NAME: " + name + 
+        String userProfileInfo = "NAME: " + this.name + 
                 "ALL SESSIONS: " + getAllSessions();
-        return s;
+        return userProfileInfo;
     }
 }

@@ -6,18 +6,18 @@ import java.util.ArrayList;
  *
  * @author Lukasz Bol
  * Used Singleton pattern to create only one instance of the UsersDatabase class. 
- * This is because we want to have only one instance of the users' database.
+ * This is because we want to have only one instance of the userProfiles' database.
  * The precedence will make sure that only one instance of the UserDatabase is accessed,
  * which decreases any confusion or errors that may arise later on while using the application.
  */
 public class UsersDatabase 
 {
     private static UsersDatabase theDatabaseInstance;
-    private ArrayList<UserProfile> users;
+    private ArrayList<UserProfile> userProfiles;
     
     private UsersDatabase()
     {
-        users = new ArrayList<>();
+        userProfiles = new ArrayList<>();
     }
     
     public UsersDatabase getInstance()
@@ -31,16 +31,16 @@ public class UsersDatabase
     
     public void addUser(UserProfile newUser)
     {
-        users.add(newUser);
+        userProfiles.add(newUser);
     }         
     
     public UserProfile findUser(String name)
     {
-        for (UserProfile temp : users)
+        for (UserProfile tempUserProfile : userProfiles)
         {
-            if(temp.getName().equals(name))
+            if(tempUserProfile.getName().equals(name))
             {
-                return temp;
+                return tempUserProfile;
             }
         }
         return null;
@@ -48,16 +48,16 @@ public class UsersDatabase
     
     public void removeUser(UserProfile existingUser)
     {
-        users.remove(existingUser);
+        userProfiles.remove(existingUser);
     }
     
     public String toString()
     {
-        String s = "";
-        for (UserProfile temp : users)
+        String allUsersInfo = "";
+        for (UserProfile tempUserProfile : userProfiles)
         {
-            s = s + temp.toString() + "\n";
+            allUsersInfo = allUsersInfo + tempUserProfile.toString() + "\n";
         }
-        return s;
+        return allUsersInfo;
     }
 }
