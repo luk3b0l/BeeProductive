@@ -5,8 +5,10 @@
 1. Project Description
 2. System Look
 3. The Repository
-4. Future Development
-5. Help
+4. What Went Wrong
+5. What I Have Learned
+6. Future Development
+7. Help
 
 
 ## 1. Project Description  
@@ -47,13 +49,21 @@ The repository consists of:
 - USE CASE DIAGRAM - BeeProductive v1.1 - a Use Case Diagram showing core functionality of the program
 
 
-## 4. Future Development 
+## 4. What Went Wrong
+- creating a simple instead of a modern UI
+- continuous time running between intervals and breaks
+
+## 5. What I Have Learned
+- improved setting GUI elements manually
+
+
+## 6. Future Development 
 Future development of this application may include:
 - a user profile
 - remote database to store users' data
 - history of past usage of the program (e.g. quantity of run intervals, dates, intervals time, breaks time, repetitions)
 
-## 5. Help  
+## 7. Help  
 Please do not hesitate to contact me on the below e-mail if you encounter any problems or need further information.
 Contact: <b>lukaszbol[at]yahoo[dot]co[dot]uk</b>
 
