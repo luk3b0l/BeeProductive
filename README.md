@@ -12,7 +12,8 @@
 
 
 ## 1. Project Description  
-Date of the project: 11/2017   
+<b>Date of the project: 11/2017   </b>
+
 This project is all about stop procrastinating and improving a user's focus on tasks that they want to complete. It uses a well known Pomodoro Technique.
 
 NOTE: The project is under construction.
